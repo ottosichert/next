@@ -1,0 +1,29 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "import/resolver": "webpack",
+    "ecmascript": 6,
+    "jsx": true
+  },
+  "plugins": [
+    "react",
+    "json"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb"
+  ],
+  "rules": {
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "quotes": ["error", "single"],
+    "import/no-extraneous-dependencies": [2, { "devDependencies": true }],
+    "react/jsx-filename-extension": 0,
+    "react/prefer-stateless-function": [1, { "ignorePureComponents": true}],
+    "react/forbid-prop-types": [2, { "forbid": ["any", "array"]}],
+  }
+}

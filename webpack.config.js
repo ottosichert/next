@@ -34,7 +34,8 @@ module.exports = {
     },
   },
   output: {
-    path: path.join(__dirname, 'src'),
+    path: path.join(__dirname, 'src/static'),
+    publicPath: 'static',
     filename: 'bundle.min.js',
   },
   plugins: debug ? [

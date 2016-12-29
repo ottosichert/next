@@ -2,9 +2,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import Routing from 'Components/Routing';
-
-import theme from './theme';
+import Layout from 'Components/Layout';
 
 export default class App extends PureComponent {
   static propTypes = {
@@ -17,8 +15,8 @@ export default class App extends PureComponent {
     const { userAgent } = this.props;
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(theme, { userAgent })}>
-        <Routing />
+      <MuiThemeProvider muiTheme={getMuiTheme({ userAgent })}>
+        <Layout />
       </MuiThemeProvider>
     );
   }

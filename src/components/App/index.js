@@ -4,6 +4,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Layout from 'Components/Layout';
 
+import theme from './theme';
+
 export default class App extends PureComponent {
   static propTypes = {
     ...PureComponent.propTypes,
@@ -15,7 +17,7 @@ export default class App extends PureComponent {
     const { userAgent } = this.props;
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme({ userAgent })}>
+      <MuiThemeProvider muiTheme={getMuiTheme(theme, { userAgent })}>
         <Layout />
       </MuiThemeProvider>
     );

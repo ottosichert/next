@@ -12,6 +12,7 @@ import { TAB } from './types';
 
 @connect(store => ({
   index: store.layout.tab.index,
+  transparent: store.layout.tab.transparent,
 }))
 export default class Menu extends Component {
   static propTypes = {
@@ -26,11 +27,18 @@ export default class Menu extends Component {
   }
 
   render() {
-    const { index } = this.props;
+    const { index, transparent } = this.props;
+
+    const tabsStyle = {
+      transition: 'background-color 0.5s',
+    };
+    if (transparent) {
+      tabsStyle.backgroundColor = 'transparent';
+    }
 
     return (
       <nav style={{ position: 'fixed', bottom: 0, width: '100%' }}>
-        <Tabs value={index} onChange={this.changeTabIndex}>
+        <Tabs value={index} onChange={this.changeTabIndex} tabItemContainerStyle={tabsStyle}>
           <Tab icon={<SocialShare />} value={TAB.SHARE} />
           <Tab icon={<NavigationFullscreen />} value={TAB.FULL} />
           <Tab icon={<CommunicationImportExport />} value={TAB.MAIN} />

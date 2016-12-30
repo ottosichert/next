@@ -10,7 +10,6 @@ const initialState = {
   pageDisabled: true,
   overlayIndex: types.OVERLAY.MAIN,
   overlayDisabled: false,
-  overlayTransparency: 0.0,
 };
 
 export default function reducer(state = initialState, action) {
@@ -41,7 +40,6 @@ export default function reducer(state = initialState, action) {
         [types.TAB.UPLOAD]: types.OVERLAY.INFO,
       }[action.payload];
       newState.overlayDisabled = (action.payload === types.TAB.UPLOAD);
-      newState.overlayTransparency = (action.payload === types.TAB.INFO ? 1.0 : 0.0);
 
       return newState;
     }
@@ -146,21 +144,6 @@ export default function reducer(state = initialState, action) {
 
       newState.overlayIndex = action.payload;
       newState.overlayDisabled = false;
-      newState.overlayTransparency = (action.payload === types.OVERLAY.INFO ? 1.0 : 0.0);
-
-      return newState;
-    }
-
-    case types.CHANGE_OVERLAY_TRANSPARENCY: {
-      const newState = { ...state };
-
-      if (types.OVERLAY.MAIN < action.payload && action.payload < types.OVERLAY.INFO) {
-        newState.overlayTransparency = action.payload - types.OVERLAY.MAIN;
-      } else if (action.payload === types.OVERLAY.INFO) {
-        newState.overlayTransparency = 1.0;
-      } else {
-        newState.overlayTransparency = 0.0;
-      }
 
       return newState;
     }

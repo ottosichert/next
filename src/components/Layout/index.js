@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import {
   changePostIndex, replacePost, replacePostFinished,
   changePageIndex,
-  changeOverlayIndex, changeOverlayTransparency,
+  changeOverlayIndex,
 } from './actions';
 import Menu from './Menu';
 
@@ -18,7 +18,6 @@ import Menu from './Menu';
   pageDisabled: store.layout.pageDisabled,
   overlayIndex: store.layout.overlayIndex,
   overlayDisabled: store.layout.overlayDisabled,
-  overlayTransparency: store.layout.overlayTransparency,
 }))
 export default class Layout extends Component {
   static propTypes = {
@@ -30,7 +29,6 @@ export default class Layout extends Component {
     pageDisabled: PropTypes.bool,
     overlayIndex: PropTypes.number,
     overlayDisabled: PropTypes.bool,
-    overlayTransparency: PropTypes.number,
     dispatch: PropTypes.func,
   };
 
@@ -59,11 +57,6 @@ export default class Layout extends Component {
     this.props.dispatch(changeOverlayIndex(index));
   }
 
-  @autobind
-  changeOverlayTransparency(index) {
-    this.props.dispatch(changeOverlayTransparency(index));
-  }
-
   render() {
     const {
       postIndex,
@@ -73,15 +66,14 @@ export default class Layout extends Component {
       pageDisabled,
       overlayIndex,
       overlayDisabled,
-      overlayTransparency,
     } = this.props;
 
     const overlayStyle = {
       height: '100%',
       width: '100%',
-      position: 'absolute',
-      top: 0,
-      background: `radial-gradient(circle, rgba(0, 0, 0, ${0.6 * overlayTransparency}), rgba(0, 0, 0, ${0.7 * overlayTransparency}))`,
+      // position: 'absolute',
+      // top: 0,
+      background: 'radial-gradient(circle, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6))',
     };
 
     return (
@@ -110,13 +102,10 @@ export default class Layout extends Component {
             <div style={{ height: '100vh', position: 'relative' }}>
               <span>Aktuelles Bild</span>
 
-              <div style={overlayStyle} />
-
               <SwipeableViews
                 index={overlayIndex}
                 containerStyle={{ width: '100vw', height: '100vh', position: 'absolute', top: 0 }}
                 onChangeIndex={this.changeOverlayIndex}
-                onSwitching={this.changeOverlayTransparency}
                 disabled={overlayDisabled}
                 slideStyle={{ height: 'calc(100vh - 48px)', width: '100vw' }}
               >
@@ -133,7 +122,7 @@ export default class Layout extends Component {
                   (leer)
                 </div>
 
-                <div>
+                <div style={overlayStyle}>
                   Overlay
                 </div>
               </SwipeableViews>

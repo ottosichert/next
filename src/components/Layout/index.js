@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import autobind from 'autobind-decorator';
 import SwipeableViews from 'react-swipeable-views';
 import { connect } from 'react-redux';
+import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 
-import Content from 'Components/Content';
+import Content, { data } from 'Components/Content';
 import { theme } from 'Components/App';
 
 import {
@@ -21,6 +22,10 @@ import Menu from './Menu';
   pageDisabled: store.layout.pageDisabled,
   overlayIndex: store.layout.overlayIndex,
   overlayDisabled: store.layout.overlayDisabled,
+  overlayOverflow: store.layout.overlayOverflow,
+
+  height: store.content.height,
+  id: store.content.id,
 }))
 export default class Layout extends Component {
   static propTypes = {
@@ -32,6 +37,10 @@ export default class Layout extends Component {
     pageDisabled: PropTypes.bool,
     overlayIndex: PropTypes.number,
     overlayDisabled: PropTypes.bool,
+    overlayOverflow: PropTypes.bool,
+
+    height: PropTypes.number,
+    id: PropTypes.number,
     dispatch: PropTypes.func,
   };
 
@@ -69,6 +78,10 @@ export default class Layout extends Component {
       pageDisabled,
       overlayIndex,
       overlayDisabled,
+      overlayOverflow,
+
+      height,
+      id,
     } = this.props;
 
     const overlayStyle = {
@@ -78,6 +91,8 @@ export default class Layout extends Component {
       // top: 0,
       background: 'radial-gradient(circle, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6))',
     };
+
+    const post = data[id];
 
     return (
       <div>
@@ -102,34 +117,45 @@ export default class Layout extends Component {
             disabled={pageDisabled}
           >
 
-            <div style={{ height: '100vh', position: 'relative' }}>
-              <Content />
+            <ScrollSync>
+              <div style={{ height: '100vh', position: 'relative' }}>
+                <ScrollSyncPane>
+                  <Content />
+                </ScrollSyncPane>
 
-              <SwipeableViews
-                index={overlayIndex}
-                containerStyle={{ width: '100vw', height: '100vh', position: 'absolute', top: 0 }}
-                onChangeIndex={this.changeOverlayIndex}
-                disabled={overlayDisabled}
-                slideStyle={{ height: '100vh', width: '100vw' }}
-              >
+                <SwipeableViews
+                  index={overlayIndex}
+                  containerStyle={{ width: '100vw', height: '100vh', position: 'absolute', top: 0 }}
+                  onChangeIndex={this.changeOverlayIndex}
+                  disabled={overlayDisabled}
+                  slideStyle={{ height: '100vh', width: '100vw' }}
+                >
 
-                <div style={overlayStyle}>
-                  Share
-                </div>
+                  <div style={overlayStyle}>
+                    Share
+                  </div>
 
-                <div>
-                  Fullscreen Bild
-                </div>
+                  <ScrollSyncPane>
+                    <div style={{ height: '100vh', overflow: (overlayOverflow ? 'scroll' : 'hidden') }}>
+                      <div style={{ height: height }}>
+                        Fullscreen Bild
+                      </div>
+                    </div>
+                  </ScrollSyncPane>
 
-                <div>
-                  (leer)
-                </div>
+                  <div>
+                    (leer)
+                  </div>
 
-                <div style={overlayStyle}>
-                  Overlay
-                </div>
-              </SwipeableViews>
-            </div>
+                  <div style={overlayStyle}>
+                    <h1>{post.title}</h1>
+                    <h2><strong>Uploader:</strong> {post.uploader}</h2>
+                    <h2><strong>Datum:</strong> {post.date}</h2>
+                    <h2><strong>Aufrufe:</strong> {post.views}</h2>
+                  </div>
+                </SwipeableViews>
+              </div>
+            </ScrollSync>
 
             <div style={{ height: '100vh', backgroundColor: theme.tabs.backgroundColor }}>
               Upload

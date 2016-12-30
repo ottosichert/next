@@ -10,6 +10,7 @@ const initialState = {
   pageDisabled: true,
   overlayIndex: types.OVERLAY.MAIN,
   overlayDisabled: false,
+  overlayOverflow: false,
 };
 
 export default function reducer(state = initialState, action) {
@@ -40,6 +41,7 @@ export default function reducer(state = initialState, action) {
         [types.TAB.UPLOAD]: types.OVERLAY.INFO,
       }[action.payload];
       newState.overlayDisabled = (action.payload === types.TAB.UPLOAD);
+      newState.overlayOverflow = (action.payload === types.TAB.FULL);
 
       return newState;
     }
@@ -147,6 +149,7 @@ export default function reducer(state = initialState, action) {
 
       newState.overlayIndex = action.payload;
       newState.overlayDisabled = false;
+      newState.overlayOverflow = (action.payload === types.OVERLAY.FULL);
 
       return newState;
     }

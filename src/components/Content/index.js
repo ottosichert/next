@@ -1,8 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import autobind from 'autobind-decorator';
+// import autobind from 'autobind-decorator';
 import Paper from 'material-ui/Paper';
 
+import { theme } from 'Components/App';
+
+import Image from './Image';
+import data from './data';
+
+@connect(store => ({
+  id: store.content.id,
+  height: store.content.height,
+}))
 export default class Content extends Component {
   static propTypes = {
     ...Component.propTypes,
@@ -10,21 +19,34 @@ export default class Content extends Component {
   }
 
   render() {
-    const { next } = this.props;
+    const { next, id } = this.props;
 
-    let text = 'bla';
+    let contentId = id;
     if (next === 'upvote') {
-      text += ' up';
+      contentId += 1;
     } else if (next === 'downvote') {
-      text += ' down';
+      contentId += 2;
     } else {
-      text += ' bla';
+      // do nothing
     }
+    contentId %= data.length;
+    const post = data[contentId];
 
     return (
-      <Paper zDepth={1}>
-        {text}
+      <Paper
+        zDepth={1}
+        style={{
+          overflow: 'hidden',
+          height: '100vh',
+          paddingBottom: 48,
+          backgroundColor: theme.tabs.backgroundColor,
+        }}
+      >
+        <Image {...post} />
       </Paper>
     );
   }
 }
+
+export reducer from './reducer';
+export data from './data';

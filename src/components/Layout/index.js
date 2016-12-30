@@ -84,11 +84,19 @@ export default class Layout extends Component {
       id,
     } = this.props;
 
+    const overlayTemplate = {
+      height: 'calc(100% - 32px)',
+      width: 'calc(100% - 32px)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+      padding: 16,
+    };
+
     const overlayStyle = {
-      height: '100%',
-      width: '100%',
-      // position: 'absolute',
-      // top: 0,
+      ...overlayTemplate,
+      color: 'white',
       background: 'radial-gradient(circle, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6))',
     };
 
@@ -137,27 +145,28 @@ export default class Layout extends Component {
 
                   <ScrollSyncPane>
                     <div style={{ height: '100vh', overflow: (overlayOverflow ? 'scroll' : 'hidden') }}>
-                      <div style={{ height: height }}>
+                      <div style={{ height }}>
                         Fullscreen Bild
                       </div>
                     </div>
                   </ScrollSyncPane>
 
-                  <div>
-                    (leer)
-                  </div>
+                  <div />
 
                   <div style={overlayStyle}>
                     <h1>{post.title}</h1>
-                    <h2><strong>Uploader:</strong> {post.uploader}</h2>
-                    <h2><strong>Datum:</strong> {post.date}</h2>
-                    <h2><strong>Aufrufe:</strong> {post.views}</h2>
+                    <h2>Uploader:</h2>
+                    <strong>{post.uploader}</strong>
+                    <h2>Datum:</h2>
+                    <strong>{post.date}</strong>
+                    <h2>Aufrufe:</h2>
+                    <strong>{post.views}</strong>
                   </div>
                 </SwipeableViews>
               </div>
             </ScrollSync>
 
-            <div style={{ height: '100vh', backgroundColor: theme.tabs.backgroundColor }}>
+            <div style={{ ...overlayTemplate, backgroundColor: theme.tabs.backgroundColor }}>
               Upload
             </div>
           </SwipeableViews>

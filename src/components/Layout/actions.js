@@ -40,3 +40,10 @@ export function changeOverlayIndex(index) {
   };
 }
 
+export function changeOverlayTransparency(transparency) {
+  return {
+    type: types.CHANGE_OVERLAY_TRANSPARENCY,
+    payload: transparency,
+  };
+}
+

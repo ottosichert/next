@@ -6,18 +6,19 @@ import { connect } from 'react-redux';
 import {
   changePostIndex, replacePost, replacePostFinished,
   changePageIndex,
-  changeOverlayIndex,
+  changeOverlayIndex, changeOverlayTransparency,
 } from './actions';
 import Menu from './Menu';
 
 @connect(store => ({
-  postIndex: store.layout.post.index,
-  postDisabled: store.layout.post.disabled,
-  postAnimateTransitions: store.layout.post.animateTransitions,
-  pageIndex: store.layout.page.index,
-  pageDisabled: store.layout.page.disabled,
-  overlayIndex: store.layout.overlay.index,
-  overlayDisabled: store.layout.overlay.disabled,
+  postIndex: store.layout.postIndex,
+  postDisabled: store.layout.postDisabled,
+  postAnimateTransitions: store.layout.postAnimateTransitions,
+  pageIndex: store.layout.pageIndex,
+  pageDisabled: store.layout.pageDisabled,
+  overlayIndex: store.layout.overlayIndex,
+  overlayDisabled: store.layout.overlayDisabled,
+  overlayTransparency: store.layout.overlayTransparency,
 }))
 export default class Layout extends Component {
   static propTypes = {
@@ -29,6 +30,7 @@ export default class Layout extends Component {
     pageDisabled: PropTypes.bool,
     overlayIndex: PropTypes.number,
     overlayDisabled: PropTypes.bool,
+    overlayTransparency: PropTypes.number,
     dispatch: PropTypes.func,
   };
 
@@ -57,6 +59,11 @@ export default class Layout extends Component {
     this.props.dispatch(changeOverlayIndex(index));
   }
 
+  @autobind
+  changeOverlayTransparency(index) {
+    this.props.dispatch(changeOverlayTransparency(index));
+  }
+
   render() {
     const {
       postIndex,
@@ -66,7 +73,16 @@ export default class Layout extends Component {
       pageDisabled,
       overlayIndex,
       overlayDisabled,
+      overlayTransparency,
     } = this.props;
+
+    const overlayStyle = {
+      height: '100%',
+      width: '100%',
+      position: 'absolute',
+      top: 0,
+      background: `radial-gradient(circle, rgba(0, 0, 0, ${0.6 * overlayTransparency}), rgba(0, 0, 0, ${0.7 * overlayTransparency}))`,
+    };
 
     return (
       <div>
@@ -94,27 +110,30 @@ export default class Layout extends Component {
             <div style={{ height: '100vh', position: 'relative' }}>
               <span>Aktuelles Bild</span>
 
+              <div style={overlayStyle} />
+
               <SwipeableViews
                 index={overlayIndex}
                 containerStyle={{ width: '100vw', height: '100vh', position: 'absolute', top: 0 }}
                 onChangeIndex={this.changeOverlayIndex}
+                onSwitching={this.changeOverlayTransparency}
                 disabled={overlayDisabled}
-                slideStyle={{ marginTop: 20 }}
+                slideStyle={{ height: 'calc(100vh - 48px)', width: '100vw' }}
               >
 
-                <div style={{ height: '100vh', width: '100vw' }}>
+                <div>
                   Share
                 </div>
 
-                <div style={{ height: '100vh', width: '100vw' }}>
+                <div>
                   Fullscreen Bild
                 </div>
 
-                <div style={{ height: '100vh', width: '100vw' }}>
+                <div>
                   (leer)
                 </div>
 
-                <div style={{ height: '100vh', width: '100vw' }}>
+                <div>
                   Overlay
                 </div>
               </SwipeableViews>

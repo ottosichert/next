@@ -22,12 +22,13 @@ export default class Content extends Component {
     const { next, id } = this.props;
 
     let contentId = id;
+    let preload = true;
     if (next === 'upvote') {
       contentId += 1;
     } else if (next === 'downvote') {
       contentId += 2;
     } else {
-      // do nothing
+      preload = false;
     }
     contentId %= data.length;
     const post = data[contentId];
@@ -42,7 +43,7 @@ export default class Content extends Component {
           backgroundColor: theme.tabs.backgroundColor,
         }}
       >
-        <Image {...post} />
+        <Image {...post} preload={preload} />
       </Paper>
     );
   }

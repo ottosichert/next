@@ -20,15 +20,16 @@ export default class Image extends Component {
   }
 
   render() {
-    const { id, title } = this.props;
+    const { id, title, preload, type } = this.props;
 
+    const imgProps = (preload ? {} : { onLoad: this.setContentHeight });
     return (
       <img
-        src={`/static/${id}.jpg`}
+        src={`/static/${id}.${type}`}
         alt={title}
         style={{ width: '100vw' }}
         ref={(img) => { this.img = img; }}
-        onLoad={this.setContentHeight}
+        {...imgProps}
       />
     );
   }

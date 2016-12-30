@@ -7,3 +7,10 @@ export function setContentHeight(height) {
   };
 }
 
+export function changeContentId(postIndex) {
+  return {
+    type: types.CHANGE_CONTENT_ID,
+    payload: postIndex,
+  };
+}
+

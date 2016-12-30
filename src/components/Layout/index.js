@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 
 import Content, { data } from 'Components/Content';
+import { changeContentId } from 'Components/Content/actions';
 import { theme } from 'Components/App';
 
 import {
@@ -51,9 +52,11 @@ export default class Layout extends Component {
 
   @autobind
   replacePost() {
+    const vote = this.props.postIndex;
     setTimeout(() => {
       this.props.dispatch(replacePost());
       setTimeout(() => {
+        this.props.dispatch(changeContentId(vote));
         this.props.dispatch(replacePostFinished());
       }, 0);
     }, 0);
@@ -145,9 +148,7 @@ export default class Layout extends Component {
 
                   <ScrollSyncPane>
                     <div style={{ height: '100vh', overflow: (overlayOverflow ? 'scroll' : 'hidden') }}>
-                      <div style={{ height }}>
-                        Fullscreen Bild
-                      </div>
+                      <div style={{ height }} />
                     </div>
                   </ScrollSyncPane>
 

@@ -3,6 +3,9 @@ import autobind from 'autobind-decorator';
 import SwipeableViews from 'react-swipeable-views';
 import { connect } from 'react-redux';
 
+import Content from 'Components/Content';
+import { theme } from 'Components/App';
+
 import {
   changePostIndex, replacePost, replacePostFinished,
   changePageIndex,
@@ -89,28 +92,28 @@ export default class Layout extends Component {
         >
 
           <div style={{ height: '100vh' }}>
-            Nächstes Bild nach Upvote
+            <Content next='upvote' />
           </div>
 
           <SwipeableViews
             index={pageIndex}
-            containerStyle={{ height: '100vh', padding: 0 }}
+            containerStyle={{ height: '100vh' }}
             onChangeIndex={this.changePageIndex}
             disabled={pageDisabled}
           >
 
             <div style={{ height: '100vh', position: 'relative' }}>
-              <span>Aktuelles Bild</span>
+              <Content />
 
               <SwipeableViews
                 index={overlayIndex}
                 containerStyle={{ width: '100vw', height: '100vh', position: 'absolute', top: 0 }}
                 onChangeIndex={this.changeOverlayIndex}
                 disabled={overlayDisabled}
-                slideStyle={{ height: 'calc(100vh - 48px)', width: '100vw' }}
+                slideStyle={{ height: '100vh', width: '100vw' }}
               >
 
-                <div>
+                <div style={overlayStyle}>
                   Share
                 </div>
 
@@ -128,13 +131,13 @@ export default class Layout extends Component {
               </SwipeableViews>
             </div>
 
-            <div style={{ height: '100vh' }}>
+            <div style={{ height: '100vh', backgroundColor: theme.tabs.backgroundColor }}>
               Upload
             </div>
           </SwipeableViews>
 
           <div style={{ height: '100vh' }}>
-            Nächstes Bild nach Downvote
+            <Content next='downvote' />
           </div>
         </SwipeableViews>
 

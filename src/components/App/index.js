@@ -24,3 +24,4 @@ export default class App extends PureComponent {
   }
 }
 
+export theme from './theme';

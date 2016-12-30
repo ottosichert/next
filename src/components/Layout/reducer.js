@@ -19,7 +19,7 @@ export default function reducer(state = initialState, action) {
       const newState = { ...state };
 
       newState.tabIndex = action.payload;
-      newState.tabTransparent = (action.payload === types.TAB.FULL);
+      newState.tabTransparent = ([types.TAB.FULL, types.TAB.SHARE].includes(action.payload));
 
       newState.postIndex = types.POST.MAIN;
       newState.postDisabled = (action.payload !== types.TAB.MAIN);
@@ -133,7 +133,10 @@ export default function reducer(state = initialState, action) {
         [types.OVERLAY.MAIN]: types.TAB.MAIN,
         [types.OVERLAY.INFO]: types.TAB.INFO,
       }[action.payload];
-      newState.tabTransparent = (action.payload === types.OVERLAY.FULL);
+      newState.tabTransparent = ([
+        types.OVERLAY.FULL,
+        types.OVERLAY.SHARE,
+      ].includes(action.payload));
 
       newState.postIndex = types.POST.MAIN;
       newState.postDisabled = (action.payload !== types.OVERLAY.MAIN);
